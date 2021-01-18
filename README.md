@@ -19,7 +19,7 @@ Icon preview generator CLI tool
 
 positional arguments:
   icons       Icons path
-  template    Template path
+  template    Template path (otherwise default.html is used)
   result      Result HTML file path (with filename)
 
 optional arguments:
@@ -29,4 +29,4 @@ optional arguments:
   --large     Large icons
   --cover     Cover icons
 ```
-# omprussia-1
+
