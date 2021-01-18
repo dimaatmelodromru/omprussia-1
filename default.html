@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+html, body {
+    background: #f5f7f6;
+    color: #333333;
+}
+.content {
+    min-width: 800px;
+    max-width: 1200px;
+    margin: 60px auto 60px auto;
+    color: #333333;
+}
+.subset+.subset {
+    padding-top: 2em;
+}
+.content table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #555555;
+}
+.content th {
+    background: #e1e1e1;
+    margin: 0;
+    padding: 1em 0;
+}
+.content th+th {
+    border-left: solid 1px #eeeeee;
+}
+.content th:nth-child(2n) {
+}
+.content tbody {
+    border-spacing: 1px;
+}
+.content tbody tr+tr {
+    border-top: solid 1px #eeeeee;
+}
+.content tbody tr {
+    background: #cccccc;
+    width: 100%
+}
+.content tbody tr:nth-child(2n) {
+    background: #e1e1e1;
+    width: 100%
+}
+.content tbody td {
+    width: 100px;
+    text-align: center;
+    padding: 1em 0;
+}
+.content tbody td:nth-child(2n) {
+    width: auto;
+}
+.icon {
+    display: inline-block;
+    overflow: hidden;
+}
+.icon-small { width: 32px; height: 32px; }
+.icon-medium { width: 64px; height: 64px; }
+.icon-large { width: 96px; height: 96px; }
+.icon-cover { width: 32px; height: 32px; }
+.icon-notification { width: 32px; height: 32px; }
+  </style>
+  <title>Icons: ({{ groups|icon_group_order|join(', ') }})</title>
+</head>
+<body>
+<div class="content" role="main">
+  {% for group in groups|icon_group_order %}
+  <div class="subset group">
+    <h2>{{ group|capitalize }}</h2>
+    <table>
+      <thead>
+      <tr>
+        {% for _ in range(0, row_size) %}
+        <th>Icon</th>
+        <th>Name</th>
+        {% endfor %}
+      </tr>
+      </thead>
+      <tbody>
+      {% for chunk in icons[group]|split_by(row_size) %}
+      <tr>
+        {% for icon in chunk %}
+        <td><img class="icon icon-{{ icon.group }} {{ icon.name }}" src="{{ icon.relpath }}" alt="{{icon.name}}"></td>
+        <td>{{ icon.name }}</td>
+        {% endfor %}
+        {% if chunk|length < row_size %}
+        <td colspan="{{ (row_size - chunk|length) * 2 }}"></td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endfor %}
+</div>
+</body>
+</html>
